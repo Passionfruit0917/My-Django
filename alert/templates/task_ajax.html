@@ -1,0 +1,32 @@
+{% block content %}
+		<tr style="background-color:#d4e3e5">
+			    <th>Retailer</th>
+			    <th>Task</th>
+			    <th>Frequency</th>
+			    <th>Weekday</th>
+			    <th>hub</th>
+			    <th>Task_owner</th>
+			    <th>CheckList </th>
+			    <th style="background-color:#c3dde0;">CLICK BELOW BUTTON TO SUBMIT:<button type="button" class="subtn" id="taskstn" >Submit Result</button></th>
+			    </tr>
+		{% for task_filter in task_filters %}
+		<tr>
+			    <td>{{task_filter.retailer}}</td> 
+			    <td>{{task_filter.task}}</td> 
+			    <td>{{task_filter.frequency}}</td> 
+			    <td>{{task_filter.weekday}}</td> 
+			    <td>{{task_filter.hub}}</td> 
+			    <td>{{task_filter.task_owner}}</td> 
+			      <td>
+			       <input type="checkbox">
+			        <!-- 
+			        <input type="radio" name={{task_filter.id}} class="rdone" value="OK">
+			       	OK
+			        <input type="radio" name={{task_filter.id}} class="rissue" value="Issue">
+			        Has Issue       
+			        <div class="treason" style="display:none">Reason(Better includes Ticket#):<textarea name="reason"></textarea></div>
+			        -->
+			    </td>
+		</tr>
+		{%endfor%}
+{%endblock%}

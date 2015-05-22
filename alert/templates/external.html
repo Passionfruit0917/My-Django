@@ -1,0 +1,29 @@
+{% extends "alert.html" %}
+
+{% block content %}
+
+<tr style="background-color:#d4e3e5">
+    <th>Production Day</th>
+    <th>Silo</th>
+    <th>server</th>
+    <th>region</th>
+    <th>service</th>
+    <th>OSM Time</th>
+    <th>PAP Time</th>
+    <th>SLA Time</th>
+</tr>
+
+		{%  for post in posts %}
+			<tr>
+			    <td>{{post.production_day}}</td> 
+			    <td>{{post.silo}}</td> 
+			    <td>{{post.server}}</td> 
+			    <td>{{post.region}}</td> 
+			    <td>{{post.service}}</td> 
+			    <td>{{post.osm}}</td> 
+			    <td>{{post.pap}}</td> 
+			    <td>{{post.sla}}</td>
+			</tr>
+		{%endfor%}
+
+	{% endblock %}

@@ -1,0 +1,34 @@
+
+{% block content %}
+		<tr style="background-color:#d4e3e5">
+			    <th>Production Day</th>
+			    <th>Silo</th>
+			    <th>server</th>
+			    <th>region</th>
+			    <th>service</th>
+			    <th>OSM Time</th>
+			    <th>PAP Time</th>
+			    <th>SLA Time</th>
+			    <th>SLA Meet?   <button type="button" class="checkbtn">All Yes</button></th>
+			    <th style="background-color:#c3dde0;">CLICK BELOW BUTTON TO SUBMIT:<button type="button"  class="subtn" id="subtn" >Submit Result</button></th>
+			    </tr>
+		{% for test in tests %}
+		<tr>
+			    <td>{{test.production_day}}</td> 
+			    <td>{{test.silo}}</td> 
+			    <td>{{test.server}}</td> 
+			    <td>{{test.region}}</td> 
+			    <td>{{test.service}}</td> 
+			    <td>{{test.osm}}</td> 
+			    <td>{{test.pap}}</td> 
+			    <td>{{test.sla}}</td> 
+			    <td>
+			        <input type="radio" name={{test.id}} class="ryes" value="Yes">
+			        Yes
+			        <input type="radio" name={{test.id}} class="rno" value="No">
+			        No       
+			        <div class="reason" style="display:none">Reason(Better includes Ticket#):<textarea name="reason"></textarea></div>
+			    </td>
+		</tr>
+		{%endfor%}
+{%endblock%}

@@ -1,0 +1,21 @@
+{% extends "task.html" %}
+{% block content %}
+		<tr style="background-color:#d4e3e5">
+			    <th>Retailer</th>
+			    <th>Task</th>
+			    <th>Frequency</th>
+			    <th>Weekday</th>
+			    <th>hub</th>
+			    <th>Task_owner</th>
+			    </tr>
+		{% for task1 in tasks1 %}
+		<tr>
+			    <td>{{task1.retailer}}</td> 
+			    <td>{{task1.task}}</td> 
+			    <td>{{task1.frequency}}</td> 
+			    <td>{{task1.weekday}}</td> 
+			    <td>{{task1.hub}}</td> 
+			    <td>{{task1.task_owner}}</td> 
+		</tr>
+		{%endfor%}
+{%endblock%}

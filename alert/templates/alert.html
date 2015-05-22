@@ -1,0 +1,113 @@
+<html>
+
+<head>
+<title>HOSTED Alert Delivery</title>
+<script language="JavaScript" type="text/javascript" src="/static/jquery-1.8.2.min.js"></script>
+<link href="/static/selectric.css" rel="stylesheet" type="text/css" />
+<link href="/static/table.css" rel="stylesheet" type="text/css" />
+<link href="/static/body.css" rel="stylesheet" type="text/css" />
+<link href="/static/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="/static/jquery.selectric.min.js"></script>
+<!--<script language="JavaScript" type="text/javascript" src="/static/table-color.js"></script>-->
+<script language="JavaScript" type="text/javascript" src="/static/ajaxselect.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/jquery-ui-datepicker.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/btn.js"></script>
+
+<script>	
+
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] !== obj) {
+            return false;
+        }
+    }
+    return true;
+}
+
+$(function(){
+$("#alternatecolor").on("click",'.subtn',function(){
+		var e1= $("#date_1").val();
+		var e2 = new Array();
+		var e3 = new Array();
+		var e4 = new Array();
+		$("#alternatecolor tr").each(function(){
+		e2.push($(this).children('td').eq(1).html());
+		});
+		
+		$("#alternatecolor tr").each(function(){
+		e3.push($(this).children('td').eq(8).children("input[type='radio']:checked").val());
+		});	
+		
+		$("#alternatecolor tr").each(function(){
+		e4.push($(this).children('td').eq(8).children('div').children('textarea').val());
+		});	
+		
+		e2.shift();
+		e3.shift();
+		e4.shift();
+		
+		if($("#date_1").val()==''){
+			alert("MANDATORY: Please fill in the DATE field before you submit!")
+			$("#div03").css("color","#F00");	
+			}		
+			else if(e3.contains(undefined))
+			{	
+			
+			alert("You didn't choose any of them! Please at least choose one!");
+			
+			}else
+			{
+			if(confirm("Once you submit this,the change ONLY can be done by backend system. Do you still want to proceed?'")){	
+			
+					e2= JSON.stringify(e2);
+					e3= JSON.stringify(e3);
+					e4= JSON.stringify(e4);	
+						
+			$.post("/submitstatus/", {"e1":e1,"e2":e2,"e3":e3,"e4":e4}, function (data) {
+							alert("Done! Thanks for your filling !");
+							//$("#alternatecolor").html(data);		
+							location.reload();																						
+				});
+			
+		}else{	
+				
+		}
+		}
+});	
+});
+</script>
+</head>
+<body>
+<img src="/static/images/logo.gif" />  
+<div style="font: 30px Lucida Sans Unicode, Arial Unicode MS, Arial;">Hosted Alert Delivery Status</div>
+
+<!--  <div id="div02">SILO:</div>
+<div id="ds02">
+<select id="select" class="select02"> 
+	<option>All</option>
+	{% for post in posts%}
+	<option>{{post.silo}}</option>
+	{%endfor%}
+</select>
+</div>
+-->
+<div id="div03">DATE:</div>
+<div id="in_01"><input type="text" id="date_1" readonly /></div>
+
+<div id="div04">
+SLA set:</div>
+<div id="ds04">
+<select id="select" class="select03"> 
+	<option value="All">All</option>
+    <option value="NOT_SET">NOT SET</option>
+    <option value="HAS_SLA_TIME">HAS SLA TIME</option>
+</select>
+</div>
+
+<table style="clear:both;" class="altrowstable" id="alternatecolor">
+{%block content%}{% endblock%}  
+</table> 
+
+</body>
+</html>

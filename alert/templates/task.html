@@ -1,0 +1,44 @@
+<html>
+
+<head>
+<title>HOSTED Alert Delivery</title>
+<script language="JavaScript" type="text/javascript" src="/static/jquery-1.8.2.min.js"></script>
+<link href="/static/selectric.css" rel="stylesheet" type="text/css" />
+<link href="/static/table.css" rel="stylesheet" type="text/css" />
+<link href="/static/body.css" rel="stylesheet" type="text/css" />
+<link href="/static/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="/static/jquery.selectric.min.js"></script>
+<!--<script language="JavaScript" type="text/javascript" src="/static/table-color.js"></script>-->
+<script language="JavaScript" type="text/javascript" src="/static/ajaxselect.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/jquery-ui-datepicker.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/btn.js"></script>
+<script>	
+
+
+</script>
+</head>
+<body>
+<img src="/static/images/logo.gif" />  
+<div style="font: 30px Lucida Sans Unicode, Arial Unicode MS, Arial;">Hosted Task Fulfillment Tracking</div>
+
+<div id="div05">DATE:</div>
+<div id="in_02"><input type="text" id="date_2" readonly /></div>
+
+<div id="div06">
+Shift:</div>
+<div id="ds05">
+<select id="select04" class="select04"> 
+	<option>All</option>
+	{% for task in tasks%}
+	<option>{{task.task_owner}}</option>
+	{%endfor%}
+</select>
+</div>
+
+<table style="clear:both;" class="altrowstable" id="alternatecolor01">
+{%block content%}{% endblock%}  
+</table>
+
+
+</body>
+</html>

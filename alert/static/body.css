@@ -1,0 +1,42 @@
+#div01 {float:left;font: 13px Lucida Sans Unicode, Arial Unicode MS, Arial;margin-top:10px;margin-right:10px;margin-top:15px;}
+
+#ds01 {float:left;margin-top:7px;}
+
+#div02 {float:left;font: 13px Lucida Sans Unicode, Arial Unicode MS, Arial;margin-top:10px;margin-right:10px;margin-top:15px;}
+
+#ds02 {float:left;margin-top:7px;}
+
+#ds04 {float:left;margin-top:7px;}
+
+#ds05 {float:left;margin-top:7px;}
+
+#div03 {float:left;font: 13px Lucida Sans Unicode, Arial Unicode MS, Arial;margin-top:10px;margin-right:10px;margin-top:15px;}
+#div04 {float:left;font: 13px Lucida Sans Unicode, Arial Unicode MS, Arial;margin-top:10px;margin-right:10px;margin-top:15px;margin-left:20px;}
+#div05 {float:left;font: 13px Lucida Sans Unicode, Arial Unicode MS, Arial;margin-top:10px;margin-right:10px;margin-top:15px;}
+#div06 {float:left;font: 13px Lucida Sans Unicode, Arial Unicode MS, Arial;margin-top:10px;margin-right:10px;margin-top:15px;margin-left:20px;}
+#in_01 {float:left;margin-top:7px;}
+#in_02 {float:left;margin-top:7px;}
+
+#ui-datepicker-div {
+display:none;
+}
+
+#date_1 {
+  width: 180px;
+  height:30px;
+  background: #F0F0F0;
+  }
+  
+#date_2 {
+  width: 180px;
+  height:30px;
+  background: #F0F0F0;
+  }
+  
+input[type="radio"]{
+  top: 6px;
+  left: 0;
+  width: 15px;
+  height: 15px;
+ 
+}

@@ -1,0 +1,321 @@
+<html>
+<head>
+<title>HOSTED Delivery Dashboard - CNHUB</title>
+{% load staticfiles %}  
+<link href="{% static "jquery-ui.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "body1.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "ember.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "selectric.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "style.css" %}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{% static "jquery-1.8.2.min.js" %}"></script>
+<script type="text/javascript" src="{% static "highcharts.js" %}"></script>
+<script type="text/javascript" src="{% static "sample.js" %}"></script>
+<script type="text/javascript" src="{% static "jquery.selectric.min.js" %}"></script>
+<script type="text/javascript" src="{% static "jqueryui.js" %}"></script>
+<script type="text/javascript" src="{% static "temp.js" %}"></script>
+<script type="text/javascript" src="{% static "jquery_ui_datepicker.js" %}"></script>
+<script type="text/javascript" src="{% static "tablesorter.js" %}"></script>
+
+
+
+<script>
+$(function () {
+var line = {{line|safe}};
+var line_amount = {{line_amount|safe}};
+var line_amount_w = {{line_amount_w|safe}};
+
+$('#container-bottom-left').highcharts({
+        chart: {
+            //plotBackgroundColor: null,
+            //plotBorderWidth: null,
+            plotShadow: false,
+            width:'390'
+        },
+        title: {
+           text: ''
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                },
+                showInLegend:true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Silo Missing Percentage',
+            data: {{lit|safe}}
+        }]
+    });
+    
+    $('#container-top').highcharts({
+    	chart: {
+    		//type: 'spline',
+    	  //width:'1250'
+    	},
+        title: {
+            text: '',
+        },
+        xAxis: {
+            categories: line
+        },
+        yAxis: {
+            title: {
+                text: 'Missing SLA Silo number'
+            },
+            min:0,
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080',
+                
+            }]
+        },
+         plotOptions: {
+                                 spline: {
+                              lineWidth: 2,
+                            states: {
+                                 hover: {
+                               lineWidth: 3,
+                               }
+                                 },
+                            marker: {
+                                enabled: false
+                                    },
+                                }
+                                 },
+                                 
+        legend: {
+            //enabled:false
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        tooltip: {
+                shared: true,
+                crosshairs: true
+            },
+        series: [{
+            name: 'Include Weekend',
+            data: line_amount
+        },{
+            name: 'Exclude Weekend',
+            data: line_amount_w
+        }
+        ]
+    });
+                                                                
+    $('#container-bottom-right').highcharts({                                           
+        chart: {                                                           
+            type: 'bar'                                                    
+        },                                                                 
+        title: {                                                           
+            text: ''                    
+        },                                                                                                                                
+        xAxis: {                                                           
+            categories: {{retail|safe}},
+            title: {                                                       
+                text: ''                                                 
+            }                                                              
+        },                                                                 
+        yAxis: {                                                           
+            min: 0,                                                      
+            title: {                                                       
+                text: '',                             
+                align: 'high'                                              
+            },                                                             
+            labels: {                                                      
+                overflow: 'justify'                                        
+            }                                                              
+        },                                                                                                                                 
+        plotOptions: {                                                     
+            bar: {                                                         
+                dataLabels: {                                              
+                    enabled: true                                          
+                } ,     
+                color: '#058DC7'   
+               // #32CD32                                                    
+            }                                                              
+        },                                                                 
+        legend: {                                                          
+			enabled:false                                                 
+        },                                                                 
+        credits: {                                                         
+            enabled: false                                                 
+        },                                                                 
+        series: [{                                                         
+            name: 'Missing number',                                             
+            data: {{retail_amount|safe}}                                   
+        }]                                                                 
+    });   
+    
+    
+    $('#silo_SLA').click(function () {
+            $('#silo_p').highcharts().yAxis[0].addPlotLine({
+                value: 240,
+                color: 'red',
+                width: 2,
+            });
+    });    
+    
+       $('#retail_SLA').click(function () {
+            $('#retail_p').highcharts().yAxis[0].addPlotLine({
+                value: 240,
+                color: 'red',
+                width: 2,
+            });
+    });                                                       
+}); 
+
+</script>
+
+
+</head>
+
+<body>
+<div id="nav" style="z-index:1">
+<img src="/static/images/logo.gif" /> 
+<h1>
+HOSTED Delivery Dashboard - CNHUB
+</h1>
+<div id="loading"></div> 
+<div id="page_mask"></div>
+<div style="float:right;position:relative;left:-50px;z-index:3;">
+<div id="dselect" style="">Report Period:</div>
+<div id="period_d">
+<select id="period_s" >
+<option value="Last 30 days">Last 30 days</option>
+<option value="Last 7 days">Last 7 days</option>
+<option value="Last 3 months">Last 3 months</option>
+<option value="Last 6 months">Last 6 months</option>
+</select>
+</div>
+</div>
+
+</div>
+<div id ="tabs" style="font-size:15px;z-index:2;margin-top:-45px">
+<ul >
+<li><a id="ember01" class="ember-view" href="#overview">Overview</a></li>
+<li><a id="ember02" class="ember-view" href="#007">Data Quality</a></li>
+<li><a id="ember03" class="ember-view" href="#silo_main">Silo Performance</a></li>
+<li><a id="ember04" class="ember-view" href="#retail_main">Retailer Management</a></li>
+<li><a id="ember05" class="ember-view" href="#daily-SLA">Daily Missing</a></li>
+</ul>
+<div id="overview" style="padding:5px;height:100%">
+<div id="panel-top">
+<div class="panel-top-heading" > 
+Missing SLA Silo numbers:
+</div>
+<div id="container-top"></div>
+</div>
+<div id="panel-left">
+<div class="panel-bottom-heading" > 
+Missing percentage of each Vendor:
+</div>
+<div class="container-bottom-left" id="container-bottom-left"></div>
+</div>
+<div id="panel-middle">
+<div class="panel-bottom-heading" > 
+Worst top 10 silos:
+</div>
+<div id="container-middle" class="container-bottom-left">
+ <table id="silo_table">
+<tr>
+	<td style='font-weight:bold;'>Siloname</td>
+	<td style='font-weight:bold;'>Missing numbers</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+{% for silo_post in silo_posts%}
+<tr>
+	<td>{{silo_post.siloid}}</td>
+	<td>{{silo_post.count1}}</td>
+</tr>
+{%endfor%}
+</table>
+</div>
+</div>
+<div id="panel-right">
+<div class="panel-bottom-heading" > 
+Missing Amount by Retailer
+</div>
+<div class="container-bottom-left" id="container-bottom-right"></div>
+</div>
+</div>
+
+<div id="silo_main" style="margin-left:-30px;height:100%">
+<div id="silo_head" style="">
+<div style="float:right;position:relative;left:-50px;">
+<div style="float:left;font-weight: bold;color: #555;text-align:left;margin-right:19px;font-size:12px;margin-top:5px;">SILO ID:  </div>
+<div style="float:left;margin: -5 5px;margin-right:-20px;">
+<select id="siloid">
+<option>Please Choose</option>
+{%for bar_silo in bar_silos%}
+<option>{{bar_silo.siloid}}</option>
+{%endfor%}
+</select>
+</div>
+</div>
+</div>
+<div id="silo_p"></div>
+<div id="silo_text" style="text-align:center;margin-top:200px;font:13px "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Verdana,Tahoma,sans-serif;">
+Please choose one silo ID you want to look up from right upper selector</div>
+<button id="silo_SLA" class="autocompare" style="display:none;font-size:12px;margin-left:10px;float:left;">Display SLA line</button>
+<button id="silo_strip_wd" name="silo_strip_wd" style="display:none;font-size:12px;margin-left:10px;float:left;">Hide Weekend</button>
+</div>
+
+<div id="retail_main" style="margin-left:-30px;height:100%;">
+<div id="retail_head" style="">
+<div style="float:right;position:relative;left:-50px;">
+<div style="float:left;font-weight: bold;color: #555;text-align: left;margin-right:19px;font-size:12px;margin-top:5px;">Retailer Name:  </div>
+<div style="float:left;margin: -5 5px;margin-right:-20px;">
+<select id="retailid">
+<option>Please Choose</option>
+{%for bar_retailer in bar_retailers%}
+<option>{{bar_retailer.retailer}}</option>
+{%endfor%}
+</select>
+</div>
+</div>
+</div>
+<div id="retail_p"></div>
+<div id="retail_text" style="text-align:center;margin-top:200px;font:13px "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Verdana,Tahoma,sans-serif;">
+Please choose one Retailer ID you want to look up from right upper selector</div>
+<button id="retail_SLA" style="display:none;font-size:12px;margin-left:10px;float:left;">Display SLA line</button>
+<button id="retailer_strip_wd" style="display:none;font-size:12px;margin-left:10px;float:left;">Hide Weekend</button>
+</div>
+
+<div id="007" style="overflow-y:auto;height:100%">
+<div style="float:right;">
+<button id="dq_btn">Opened DQ Tickets From Zendesk</button>
+<button id="dq_chart_btn">Display DQ chart</button>
+</div>
+<div id="dq_chart" style="position:relative;margin-top:50px;width:50%;height:50%;"></div>
+<div id="idata" style="display:none">Data Quality - Incorrect Data:</div>
+<table id="idata_t" class="tablesorter"></table>
+<div id="mdata" style="display:none">Data Quality - Missing Data:</div>
+<table id="mdata_t" class="tablesorter"></table>
+</div>
+
+
+<div id="daily-SLA" style="overflow-y:auto;height:100%">
+<div style="float:right;font-size:12px;margin-right:30px;">
+<div id="sla_text" style="float:left;margin-right:20px;margin-top:8px;">DATE:</div>
+<div id="sla_date" style="float:left;"><input type="text" style="width:220px;height:30px;" id="sla_date_1" readonly /></div>
+</div>
+<div style="margin-top:60px;">
+<table id="daily_table" class="tablesorter"></table>
+</div>
+
+</div>
+
+
+</div>
+</body>
+</html>
